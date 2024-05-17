@@ -1,24 +1,4 @@
-const myLibrary = [
-  new Book(
-    "Cure Tooth Decay: Remineralize Cavities & Repair Your Teeth Naturally with Good Food",
-    "Ramiel Nagel",
-    358,
-    false
-  ),
-  new Book("Mastery", "Robert Greene", 505, false),
-  new Book(
-    "Building a Second Brain: A Proven Method to Organize Your Digital Life and Unlock Your Creative Potential",
-    "Tiago Forte",
-    453,
-    true
-  ),
-  new Book(
-    "The Showman: Inside the Invasion That Shook the World and Made a Leader of Volodymyr Zelensky",
-    "Simon Shuster",
-    430,
-    false
-  ),
-];
+const myLibrary = [];
 const bookContainer = document.querySelector(".book-container");
 const newBookButton = document.querySelector(".new-book-button");
 const dialog = document.querySelector(".new-book-dialog");

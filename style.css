@@ -1,0 +1,51 @@
+@import "preflight.css";
+
+body {
+  background-color: #e2e8f0;
+  padding: 1rem;
+}
+
+.heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.new-book-button {
+  padding: 0.4rem 1.6rem;
+  background-color: #1a92d3;
+  border-radius: 1.5rem;
+  font-size: 0.85rem;
+  color: white;
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.book-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1rem;
+}
+
+.book-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0rem 0.2rem 0.3rem #c9c8c8;
+  padding: 0.7rem;
+
+  & .title {
+    font-weight: 600;
+  }
+
+  & .read {
+    color: #6d6d6d;
+  }
+}
+

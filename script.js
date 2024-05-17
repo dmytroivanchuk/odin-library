@@ -21,6 +21,8 @@ const myLibrary = [
 ];
 const bookContainer = document.querySelector(".book-container");
 const newBookButton = document.querySelector(".new-book-button");
+const dialog = document.querySelector(".new-book-dialog");
+const newBookButtonDialog = document.querySelector(".new-book-button-dialog");
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -72,3 +74,26 @@ function addBookCard(book) {
 
   bookContainer.appendChild(bookCard);
 }
+
+newBookButton.addEventListener("click", () => {
+  dialog.showModal();
+});
+
+newBookButtonDialog.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const titleInput = document.querySelector("#title-input");
+  const authorInput = document.querySelector("#author-input");
+  const pagesInput = document.querySelector("#pages-input");
+  const readInput = document.querySelector("#read-input");
+
+  const newBook = new Book(
+    titleInput.value,
+    authorInput.value,
+    pagesInput.value,
+    readInput.value
+  );
+
+  addBookToLibrary(newBook);
+  dialog.close();
+});

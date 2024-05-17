@@ -3,20 +3,20 @@ const myLibrary = [
     "Cure Tooth Decay: Remineralize Cavities & Repair Your Teeth Naturally with Good Food",
     "Ramiel Nagel",
     358,
-    "not read yet"
+    false
   ),
-  new Book("Mastery", "Robert Greene", 505, "not read yet"),
+  new Book("Mastery", "Robert Greene", 505, false),
   new Book(
     "Building a Second Brain: A Proven Method to Organize Your Digital Life and Unlock Your Creative Potential",
     "Tiago Forte",
     453,
-    "read"
+    true
   ),
   new Book(
     "The Showman: Inside the Invasion That Shook the World and Made a Leader of Volodymyr Zelensky",
     "Simon Shuster",
     430,
-    "not read yet"
+    false
   ),
 ];
 const bookContainer = document.querySelector(".book-container");
@@ -28,11 +28,15 @@ function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.read = read;
+  this.read = read ? "read" : "not read yet";
 }
 
 Book.prototype.info = function () {
   return `${this.title} by ${this.author}, ${this.pages}, ${this.read}.`;
+};
+
+Book.prototype.toggleRead = function () {
+  this.read = this.read === "read" ? "not read yet" : "read";
 };
 
 function addBookToLibrary(book) {
@@ -47,30 +51,58 @@ myLibrary.forEach((book) => {
 function addBookCard(book) {
   const title = document.createElement("h2");
   title.classList.add("title");
-  const titleText = document.createTextNode(book.title);
-  title.appendChild(titleText);
+  title.textContent = book.title;
 
   const author = document.createElement("h3");
   author.classList.add("author");
-  const authorText = document.createTextNode(book.author);
-  author.appendChild(authorText);
+  author.textContent = book.author;
 
   const pages = document.createElement("h3");
   pages.classList.add("pages");
-  const pagesText = document.createTextNode(book.pages);
-  pages.appendChild(pagesText);
+  pages.textContent = book.pages;
 
   const read = document.createElement("h3");
   read.classList.add("read");
-  const readText = document.createTextNode(book.read);
-  read.appendChild(readText);
+  read.textContent = book.read;
+
+  const changeReadButton = document.createElement("button");
+  changeReadButton.type = "button";
+  changeReadButton.classList.add("change-read-button");
+  changeReadButton.textContent = "Change";
+  changeReadButton.addEventListener("click", (event) => {
+    const containingBookCard = changeReadButton.closest(".book-card");
+    const bookToChangeIndex = containingBookCard.dataset.indexNumber;
+    const bookToChange = myLibrary[bookToChangeIndex];
+    bookToChange.toggleRead();
+    const siblingRead = changeReadButton.previousElementSibling;
+    siblingRead.textContent = bookToChange.read;
+  });
+
+  const readInfoContainer = document.createElement("div");
+  readInfoContainer.classList.add("read-info-container");
+  readInfoContainer.appendChild(read);
+  readInfoContainer.appendChild(changeReadButton);
+
+  const removeBookButton = document.createElement("button");
+  removeBookButton.type = "button";
+  removeBookButton.classList.add("remove-book-button");
+  removeBookButton.textContent = "Remove Book";
+  removeBookButton.addEventListener("click", (event) => {
+    const containingBookCard = removeBookButton.closest(".book-card");
+    const bookToRemoveIndex = containingBookCard.dataset.indexNumber;
+    myLibrary.splice(bookToRemoveIndex, 1);
+    containingBookCard.remove();
+  });
 
   const bookCard = document.createElement("div");
+  const bookIndex = myLibrary.indexOf(book);
+  bookCard.dataset.indexNumber = bookIndex;
   bookCard.classList.add("book-card");
   bookCard.appendChild(title);
   bookCard.appendChild(author);
   bookCard.appendChild(pages);
-  bookCard.appendChild(read);
+  bookCard.appendChild(readInfoContainer);
+  bookCard.appendChild(removeBookButton);
 
   bookContainer.appendChild(bookCard);
 }
@@ -91,7 +123,7 @@ newBookButtonDialog.addEventListener("click", (event) => {
     titleInput.value,
     authorInput.value,
     pagesInput.value,
-    readInput.value
+    readInput.checked
   );
 
   addBookToLibrary(newBook);

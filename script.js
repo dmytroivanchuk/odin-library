@@ -4,20 +4,22 @@ const newBookButton = document.querySelector(".new-book-button");
 const dialog = document.querySelector(".new-book-dialog");
 const newBookButtonDialog = document.querySelector(".new-book-button-dialog");
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read ? "read" : "not read yet";
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read ? "read" : "not read yet";
+  }
+
+  info() {
+    return `${this.title} by ${this.author}, ${this.pages}, ${this.read}.`;
+  }
+
+  toggleRead() {
+    this.read = this.read === "read" ? "not read yet" : "read";
+  }
 }
-
-Book.prototype.info = function () {
-  return `${this.title} by ${this.author}, ${this.pages}, ${this.read}.`;
-};
-
-Book.prototype.toggleRead = function () {
-  this.read = this.read === "read" ? "not read yet" : "read";
-};
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
